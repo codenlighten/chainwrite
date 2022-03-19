@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script
+			type="text/javascript"
+			src="https://unpkg.com/bsv@1.5.0/bsv.min.js"
+		></script>
+
+		<script src="./node_modules/uuidjs/dist/uuid.core.js"></script>
+		<script>
+			var uuid = UUID.generate();
+			console.log(uuid);
+		</script>
+		<title>Document</title>
+	</head>
+	<body>
+		<button onclick="makePost()">Click Test</button>
+		<script>
+			let myData = "SmartLedger Solutions";
+			let script = bsv.Script.buildSafeDataOut([myData]).toHex();
+			console.log(script);
+
+			// script = script.replace("0 OP_RETURN", "");
+			// console.log(script);
+			const myPost = {
+				v: "1",
+				id: uuid,
+				script,
+			};
+			console.log(JSON.stringify(myPost));
+			const baseUrl = "https://portal.metastreme.com/api";
+			const makePost = async () => {
+				let response = fetch(`${baseUrl}/request`, {
+					method: "POST",
+					headers: {
+						Authorization: apiKey,
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(myPost),
+				});
+				console.log(response);
+			};
+			const getPost = async (uuid) => {
+				let txidRes = fetch(`${baseUrl}/request/${uuid}/status`, {
+					method: "GET",
+					headers: {
+						Authorization: apiKey,
+						"Content-Type": "application/json",
+					},
+				});
+				const txid = await txidRes;
+				console.log(txid);
+			};
+
+			getPost("7e43d79c-039a-4dd3-b76a-acfe516606a2");
+		</script>
+	</body>
+</html>
