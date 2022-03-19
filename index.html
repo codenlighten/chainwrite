@@ -17,19 +17,20 @@
 		<title>Document</title>
 	</head>
 	<body>
+		<input id="message" placeholder="your message" type="text" />
+
 		<button onclick="makePost()">Click Test</button>
 		<script>
-			let myData = "SmartLedger Solutions";
+			let apiKey = prompt("api?");
+			let myData = document.getElementById("message").value || "Hello World";
 			let script = bsv.Script.buildSafeDataOut([myData]).toHex();
 			console.log(script);
-
-			// script = script.replace("0 OP_RETURN", "");
-			// console.log(script);
 			const myPost = {
 				v: "1",
 				id: uuid,
 				script,
 			};
+
 			console.log(JSON.stringify(myPost));
 			const baseUrl = "https://portal.metastreme.com/api";
 			const makePost = async () => {
