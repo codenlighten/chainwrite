@@ -39,10 +39,12 @@
 		<script>
 			const getApi = () => {
 				let api = prompt("Enter Your MetaStreme API Key");
-				localStorage.setItem("apiKey", api);
 				return api;
 			};
-			let apiKey = localStorage.apiKey ? localStorage.apiKey : getApi();
+			let apiKey =
+				localStorage.apiKey && localStorage.apiKey != null
+					? localStorage.apiKey
+					: getApi();
 
 			let myData = document.getElementById("message").value || "Hello World";
 			let script = bsv.Script.buildSafeDataOut([myData]).toHex();
