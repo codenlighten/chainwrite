@@ -9,9 +9,9 @@
 			src="https://unpkg.com/bsv@1.5.0/bsv.min.js"
 		></script>
 
-		<script src="./node_modules/uuidjs/dist/uuid.core.js"></script>
+		<!-- <script src="./node_modules/uuidjs/dist/uuid.core.js"></script> -->
 		<script>
-			var uuid = UUID.generate();
+			var uuid = crypto.randomUUID();
 			console.log(uuid);
 		</script>
 		<link rel="stylesheet" href="./style.css" />
@@ -23,8 +23,27 @@
 		<input id="message" placeholder="your message" type="text" />
 
 		<button onclick="makePost()">Click Test</button>
+		<br />
+		<input
+			id="uuid"
+			placeholder="check uuid status"
+			type="text"
+			onkeyup="getPost()"
+		/>
+		<br />
+		<h2 id="success"></h2>
+		<div id="myTransactions">
+			<ul id="transactionList"></ul>
+		</div>
+		<div id="getPost"></div>
 		<script>
-			let apiKey = prompt("api?");
+			const getApi = () => {
+				let api = prompt("Enter Your MetaStreme API Key");
+				localStorage.setItem("apiKey", api);
+				return api;
+			};
+			let apiKey = localStorage.apiKey ? localStorage.apiKey : getApi();
+
 			let myData = document.getElementById("message").value || "Hello World";
 			let script = bsv.Script.buildSafeDataOut([myData]).toHex();
 			console.log(script);
@@ -46,8 +65,27 @@
 					body: JSON.stringify(myPost),
 				});
 				console.log(response);
+				if ((response.status = 200)) {
+					let myList = document.getElementById("transactionList");
+					let r = await Object.values(response);
+					r.forEach(function (item) {
+						let li = document.createElement("li");
+						myList.appendChild(li);
+						li.style.fontSize = "2rem";
+						li.style.listStyle = "none";
+						li.innerHTML += `Code: ${item}`;
+					});
+					console.log(r);
+					document.getElementById("success").innerHTML = `Sucesss UUID ${uuid}`;
+					document.getElementById("message").value = "";
+					setTimeout(() => {
+						getPost(uuid);
+					}, 5000);
+				} else {
+					alert("error, try again");
+				}
 			};
-			const getPost = async (uuid) => {
+			const getPost = async () => {
 				let txidRes = fetch(`${baseUrl}/request/${uuid}/status`, {
 					method: "GET",
 					headers: {
@@ -56,10 +94,10 @@
 					},
 				});
 				const txid = await txidRes;
-				console.log(txid);
+				const b = await txid.json();
+				console.log(b);
+				document.getElementById("getPost").innerHTML = `TXID: ${b.txid}`;
 			};
-
-			getPost("7e43d79c-039a-4dd3-b76a-acfe516606a2");
 		</script>
 	</body>
 </html>
