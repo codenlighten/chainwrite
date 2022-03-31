@@ -1,5 +1,19 @@
 body {
-	background-color: rgb(92, 92, 241);
+	background-color: rgb(58, 69, 228);
 	text-align: center;
-	color: black;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+#main {
+	background-color: black;
+	color: whitesmoke;
+	height: 100%;
+	width: 100%;
 }

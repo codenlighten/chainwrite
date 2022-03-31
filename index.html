@@ -19,23 +19,21 @@
 		<title>ChainWriter</title>
 	</head>
 	<body>
-		<h1>ChainWriter</h1>
-		<input id="message" placeholder="your message" type="text" />
+		<div id="header"><h1>ChainWriter - MetaStreme Tool</h1></div>
+		<div id="main">
+			<input id="message" placeholder="your message" type="text" />
 
-		<button onclick="makePost()">Click Test</button>
-		<br />
-		<!-- <input
-			id="uuid"
-			placeholder="check uuid status"
-			type="text"
-			onsubmit="getPost()"
-		/> -->
-		<br />
-		<h2 id="success"></h2>
-		<div id="myTransactions">
-			<ul id="transactionList"></ul>
+			<button onclick="makePost()">Click Test</button>
+
+			<br />
+			<h2 id="success"></h2>
+			<div id="myTransactions">
+				<ul id="transactionList"></ul>
+			</div>
+			<div id="getPost"></div>
+			<div id="getTx"></div>
 		</div>
-		<div id="getPost"></div>
+		<div id="footer"></div>
 		<script>
 			const getApi = () => {
 				let api = prompt("Enter Your MetaStreme API Key");
@@ -99,9 +97,41 @@
 					},
 				});
 				const txid = await txidRes;
-				const b = await txid.json();
-				console.log(b);
-				document.getElementById("getPost").innerHTML = `TXID: ${b.txid}`;
+				const myTxid = await txid.json();
+
+				console.log(myTxid);
+				document.getElementById("getPost").innerHTML = `TXID: ${myTxid.txid}`;
+				setTimeout(() => {
+					getTx(myTxid.txid);
+				}, 5000);
+			};
+
+			const getTx = async (myTxid) => {
+				let txResponse = fetch(`${baseUrl}/transaction/${myTxid}/`, {
+					method: "GET",
+					headers: {
+						Authorization: apiKey,
+						"Content-Type": "application/json",
+					},
+				});
+				if ((txResponse.status = 200)) {
+					console.log("success 200");
+				}
+				let txRes = await txResponse;
+				let tx = await txRes.body.toString();
+				// const txStream = tx.getReader();
+
+				console.log(tx);
+				document.getElementById("getTx").innerHTML = `TXID Info: ${tx}`;
+			};
+
+			const hexConvert = (str1) => {
+				var hex = str1.toString();
+				var str = "";
+				for (var n = 0; n < hex.length; n += 2) {
+					str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+				}
+				console.log(str);
 			};
 		</script>
 	</body>
