@@ -20,6 +20,11 @@ body {
 	padding: 2rem;
 }
 
+#getTx {
+	color: aqua;
+}
+
 #header {
+	text-align: center;
 	color: black;
 }

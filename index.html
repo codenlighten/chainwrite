@@ -12,7 +12,6 @@
 		<!-- <script src="./node_modules/uuidjs/dist/uuid.core.js"></script> -->
 		<script>
 			var uuid = crypto.randomUUID();
-			console.log(uuid);
 		</script>
 		<link rel="stylesheet" href="./style.css" />
 
@@ -31,7 +30,7 @@
 				<ul id="transactionList"></ul>
 			</div>
 			<div id="getPost"></div>
-			<div id="getTx"></div>
+			<h3 id="getTx"></h3>
 		</div>
 		<div id="footer"></div>
 		<script>
@@ -47,16 +46,17 @@
 					? localStorage.apiKey
 					: getApi();
 
-			let myData = document.getElementById("message").value || "Hello World";
-			let script = bsv.Script.buildSafeDataOut([myData]).toHex();
-			console.log(script);
-			const myPost = {
-				v: "1",
-				id: uuid,
-				script,
+			const myPostData = () => {
+				let myData = document.getElementById("message").value;
+				let script = bsv.Script.buildSafeDataOut([myData]).toHex();
+				myPost = {
+					v: "1",
+					id: uuid,
+					script,
+				};
+				return myPost;
 			};
 
-			console.log(JSON.stringify(myPost));
 			const baseUrl = "https://portal.metastreme.com/api";
 			const makePost = async () => {
 				let response = fetch(`${baseUrl}/request`, {
@@ -65,7 +65,7 @@
 						Authorization: apiKey,
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify(myPost),
+					body: await JSON.stringify(myPostData()),
 				});
 				console.log(response);
 				if ((response.status = 200)) {
@@ -88,7 +88,7 @@
 					alert("error, try again");
 				}
 			};
-			const getPost = async () => {
+			const getPost = async (uuid) => {
 				let txidRes = fetch(`${baseUrl}/request/${uuid}/status`, {
 					method: "GET",
 					headers: {
@@ -111,18 +111,25 @@
 					method: "GET",
 					headers: {
 						Authorization: apiKey,
-						"Content-Type": "application/json",
+						// "Content-Type": "application/json",
+						Accept: "application/octet-stream",
 					},
 				});
 				if ((txResponse.status = 200)) {
 					console.log("success 200");
+					const tx = await txResponse;
+					const rawTx = await tx.arrayBuffer();
+					let t = await new Response(rawTx).text();
+					console.log(t);
+					let view = new Uint8Array(t);
+					myView = () => {
+						view = view.join("");
+						return view;
+					};
+					document.getElementById("getTx").innerHTML = `TXID Info: ${hexConvert(
+						myView()
+					)}`;
 				}
-				let txRes = await txResponse;
-				let tx = await txRes.body.toString();
-				// const txStream = tx.getReader();
-
-				console.log(tx);
-				document.getElementById("getTx").innerHTML = `TXID Info: ${tx}`;
 			};
 
 			const hexConvert = (str1) => {
@@ -131,7 +138,7 @@
 				for (var n = 0; n < hex.length; n += 2) {
 					str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
 				}
-				console.log(str);
+				return str;
 			};
 		</script>
 	</body>
