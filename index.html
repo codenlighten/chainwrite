@@ -122,12 +122,12 @@
 					let t = await new Response(rawTx).text();
 					console.log(t);
 					let view = new Uint8Array(t);
-					myView = () => {
-						view = view.join("");
-						return view;
-					};
+					// myView = () => {
+					// 	view = view.join("");
+					// 	return view;
+					// };
 					document.getElementById("getTx").innerHTML = `TXID Info: ${hexConvert(
-						myView()
+						t
 					)}`;
 				}
 			};
