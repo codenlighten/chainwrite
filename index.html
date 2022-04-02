@@ -111,21 +111,15 @@
 					method: "GET",
 					headers: {
 						Authorization: apiKey,
-						// "Content-Type": "application/json",
-						Accept: "application/octet-stream",
+						"Content-Type": "application/json",
+						// Accept: "application/octet-stream",
 					},
 				});
 				if ((txResponse.status = 200)) {
-					console.log("success 200");
-					const tx = await txResponse;
-					const rawTx = await tx.arrayBuffer();
-					let t = await new Response(rawTx).text();
+					console.log(txResponse.status);
+					const t = await new Response(txResponse).blob();
+
 					console.log(t);
-					let view = new Uint8Array(t);
-					// myView = () => {
-					// 	view = view.join("");
-					// 	return view;
-					// };
 					document.getElementById(
 						"getTx"
 					).innerHTML = `TXID Info: ${await hexConvert(t)}`;
