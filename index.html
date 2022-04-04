@@ -107,25 +107,30 @@
 			};
 
 			const getTx = async (myTxid) => {
-				let txResponse = fetch(`${baseUrl}/transaction/${myTxid}/`, {
+				let txResponse = await fetch(`${baseUrl}/transaction/${myTxid}/`, {
 					method: "GET",
 					headers: {
 						Authorization: apiKey,
-						"Content-Type": "application/json",
-						// Accept: "application/octet-stream",
+						// "Content-Type": "application/json",
+						Accept: "application/octet-stream",
 					},
 				});
 				if ((txResponse.status = 200)) {
 					console.log(txResponse.status);
-					const t = await new Response(txResponse).blob();
-
+					const t = await txResponse.blob();
 					console.log(t);
+					const u = await t.text();
+					console.log(u);
 					document.getElementById(
 						"getTx"
-					).innerHTML = `TXID Info: ${await hexConvert(t)}`;
+					).innerHTML = `TXID Data: ${binaryToText(u)}`;
 				}
 			};
-
+			const binaryToText = (binary) => {
+				binary = binary.split(" ");
+				return;
+				binary.map((elem) => String.fromCharCode(parseInt(elem, 2))).join("");
+			};
 			const hexConvert = (str1) => {
 				var hex = str1.toString();
 				var str = "";
