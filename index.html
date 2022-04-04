@@ -121,9 +121,7 @@
 					console.log(t);
 					const u = await t.text();
 					console.log(u);
-					document.getElementById(
-						"getTx"
-					).innerHTML = `TXID Data: ${binaryToText(u)}`;
+					document.getElementById("getTx").innerHTML = `TXID Data: ${u}`;
 				}
 			};
 			const binaryToText = (binary) => {
