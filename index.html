@@ -30,7 +30,7 @@
 				<ul id="transactionList"></ul>
 			</div>
 			<div id="getPost"></div>
-			<h3 id="getTx"></h3>
+			<h3 style="word-wrap: break-word" id="getTx"></h3>
 		</div>
 		<div id="footer"></div>
 		<script>
@@ -76,6 +76,7 @@
 						myList.appendChild(li);
 						li.style.fontSize = "2rem";
 						li.style.listStyle = "none";
+						li.style.wordWrap = "break-word";
 						li.innerHTML += `Code: ${item}`;
 					});
 					console.log(r);
@@ -123,19 +124,6 @@
 					console.log(u);
 					document.getElementById("getTx").innerHTML = `TXID Data: ${u}`;
 				}
-			};
-			const binaryToText = (binary) => {
-				binary = binary.split(" ");
-				return;
-				binary.map((elem) => String.fromCharCode(parseInt(elem, 2))).join("");
-			};
-			const hexConvert = (str1) => {
-				var hex = str1.toString();
-				var str = "";
-				for (var n = 0; n < hex.length; n += 2) {
-					str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
-				}
-				return str;
 			};
 		</script>
 	</body>
