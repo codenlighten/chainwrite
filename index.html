@@ -32,7 +32,9 @@
 			<div id="getPost"></div>
 			<h3 style="word-wrap: break-word" id="getTx"></h3>
 		</div>
-		<div id="footer"></div>
+		<div id="footer">
+			<button onclick="logout()" id="logout">Logout</button>
+		</div>
 		<script>
 			const getApi = () => {
 				let api = prompt("Enter Your MetaStreme API Key");
@@ -45,6 +47,10 @@
 				localStorage.apiKey && localStorage.apiKey != null
 					? localStorage.apiKey
 					: getApi();
+
+			const logout = () => {
+				localStorage.clear();
+			};
 
 			const myPostData = () => {
 				let myData = document.getElementById("message").value;

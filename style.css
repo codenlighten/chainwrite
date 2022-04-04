@@ -2,10 +2,10 @@ body {
 	background-color: rgb(58, 69, 228);
 	text-align: center;
 	color: white;
-	display: flex;
+	/* display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+	align-items: center; */
 	margin: 0;
 	width: 100vw;
 	height: 100vh;
@@ -15,7 +15,7 @@ body {
 	background-color: black;
 	color: whitesmoke;
 	height: 100%;
-	width: 100%;
+	width: 90%;
 	margin: auto;
 	padding: 2rem;
 }
@@ -23,7 +23,9 @@ body {
 #getTx {
 	color: aqua;
 }
-
+#footer {
+	height: auto;
+}
 #header {
 	text-align: center;
 	color: black;
