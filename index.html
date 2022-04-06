@@ -127,7 +127,7 @@
 				console.log(myTxid);
 
 				myTxs.push(myTxid.txid);
-				localStorage.setItem(myTxs, myTxs);
+				localStorage.setItem("myTxs", myTxs);
 				document.getElementById("getPost").innerHTML = `TXID: ${myTxid.txid}`;
 				setTimeout(() => {
 					getTx(myTxid.txid);
