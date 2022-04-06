@@ -127,9 +127,10 @@
 					localStorage.setItem("myTxs", myTxs);
 				} else {
 					let txs = localStorage.getItem("myTxs");
+					console.log(txs);
 					let myTxs = [];
+					myTxs.push(txs);
 					myTxs.push(myTxid.txid);
-					myTxs.concat(txs);
 					console.log(myTxs);
 					localStorage.setItem("myTxs", myTxs);
 				}
