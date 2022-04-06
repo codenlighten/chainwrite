@@ -20,6 +20,7 @@ body {
 	color: black;
 }
 #main {
+	text-align: center;
 	background-color: black;
 	color: whitesmoke;
 	height: 100%;
