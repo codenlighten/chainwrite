@@ -120,7 +120,9 @@
 				const txid = await txidRes;
 				const myTxid = await txid.json();
 
-				if (localStorage.myTxs) {
+				if (!localStorage.myTxs) {
+					localStorage.setItem("myTxs", []);
+				} else {
 					let txs = localStorage.getItem("myTxs");
 				}
 				let myTxs = [];
