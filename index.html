@@ -121,16 +121,19 @@
 				const myTxid = await txid.json();
 
 				if (!localStorage.myTxs) {
-					localStorage.setItem("myTxs", []);
+					let myTxs = [];
+					myTxs.push(myTxid.txid);
+					console.log(myTxs);
+					localStorage.setItem("myTxs", myTxs);
 				} else {
 					let txs = localStorage.getItem("myTxs");
+					let myTxs = [];
+					myTxs.push(myTxid.txid);
+					myTxs.concat(txs);
+					console.log(myTxs);
+					localStorage.setItem("myTxs", myTxs);
 				}
-				let myTxs = [];
-				myTxs.push(myTxid.txid);
-				myTxs.concat(txs);
-				console.log(myTxs);
 
-				localStorage.setItem("myTxs", myTxs);
 				document.getElementById("getPost").innerHTML = `TXID: ${myTxid.txid}`;
 				setTimeout(() => {
 					getTx(myTxid.txid);
