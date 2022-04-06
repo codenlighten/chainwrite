@@ -121,7 +121,8 @@
 				const myTxid = await txid.json();
 				let myTxs = [];
 				if (localStorage.myTxs) {
-					myTxs.concat(localStorage.myTxs);
+					let txs = localStorage.myTxs;
+					myTxs.concat(txs);
 				}
 
 				console.log(myTxid);
