@@ -11,7 +11,7 @@
 
 		<!-- <script src="./node_modules/uuidjs/dist/uuid.core.js"></script> -->
 		<script>
-			var uuid = crypto.randomUUID();
+			// let uuid = crypto.randomUUID();
 		</script>
 		<link rel="stylesheet" href="./style.css" />
 
@@ -56,6 +56,7 @@
 			const myPostData = () => {
 				let myData = document.getElementById("message").value;
 				let script = bsv.Script.buildSafeDataOut([myData]).toHex();
+				let uuid = crypto.randomUUID();
 				myPost = {
 					v: "1",
 					id: uuid,
@@ -66,6 +67,16 @@
 
 			const baseUrl = "https://portal.metastreme.com/api";
 			const makePost = async () => {
+				let myList = document.getElementById("transactionList");
+
+				document.getElementById("transactionList").innerHTML = "";
+				document.getElementById("success").innerHTML = "";
+				document.getElementById("getPost").innerHTML = "";
+				document.getElementById("getTx").innerHTML = "";
+				var child = myList.lastElementChild;
+				while (child) {
+					myList.removeChild(child);
+				}
 				let response = fetch(`${baseUrl}/request`, {
 					method: "POST",
 					headers: {
@@ -76,7 +87,6 @@
 				});
 				console.log(response);
 				if ((response.status = 200)) {
-					let myList = document.getElementById("transactionList");
 					let r = await Object.values(response);
 					r.forEach(function (item) {
 						let li = document.createElement("li");
@@ -87,10 +97,12 @@
 						li.innerHTML += `Code: ${item}`;
 					});
 					console.log(r);
-					document.getElementById("success").innerHTML = `Sucesss UUID ${uuid}`;
+					document.getElementById(
+						"success"
+					).innerHTML = `Sucesss UUID ${myPost.id}`;
 					document.getElementById("message").value = "";
 					setTimeout(() => {
-						getPost(uuid);
+						getPost(myPost.id);
 					}, 5000);
 				} else {
 					alert("error, try again");
@@ -119,16 +131,16 @@
 					method: "GET",
 					headers: {
 						Authorization: apiKey,
-						// "Content-Type": "application/json",
-						Accept: "application/octet-stream",
+						"Content-Type": "application/json",
+						// Accept: "application/octet-stream",
 					},
 				});
 				if ((txResponse.status = 200)) {
 					console.log(txResponse.status);
 					const t = await txResponse.blob();
 					console.log(t);
+
 					const u = await t.text();
-					console.log(u);
 					document.getElementById("getTx").innerHTML = `TXID Data: ${u}`;
 				}
 			};
