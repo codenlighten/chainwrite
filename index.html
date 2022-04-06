@@ -119,15 +119,15 @@
 				});
 				const txid = await txidRes;
 				const myTxid = await txid.json();
-				let myTxs = [];
+
 				if (localStorage.myTxs) {
 					let txs = localStorage.getItem("myTxs");
 				}
-
-				console.log(myTxid);
-
+				let myTxs = [];
 				myTxs.push(myTxid.txid);
 				myTxs.concat(txs);
+				console.log(myTxs);
+
 				localStorage.setItem("myTxs", myTxs);
 				document.getElementById("getPost").innerHTML = `TXID: ${myTxid.txid}`;
 				setTimeout(() => {
