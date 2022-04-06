@@ -15,6 +15,9 @@ body {
 	background-color: rgb(58, 69, 228);
 	height: auto;
 	width: 100%;
+	margin: auto;
+	text-align: center;
+	color: black;
 }
 #main {
 	background-color: black;
@@ -30,8 +33,5 @@ body {
 }
 #footer {
 	height: auto;
-}
-#header {
-	text-align: center;
-	color: black;
+	margin: auto;
 }
