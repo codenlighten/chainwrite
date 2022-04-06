@@ -1,5 +1,6 @@
 body {
-	background-color: rgb(58, 69, 228);
+	background-image: url("./assets/bg.gif");
+
 	text-align: center;
 	color: white;
 	/* display: flex;
@@ -10,12 +11,16 @@ body {
 	width: 100vw;
 	height: 100vh;
 }
-
+#header {
+	background-color: rgb(58, 69, 228);
+	height: auto;
+	width: 100%;
+}
 #main {
 	background-color: black;
 	color: whitesmoke;
 	height: 100%;
-	width: 90%;
+	width: 90vw;
 	margin: auto;
 	padding: 2rem;
 }
