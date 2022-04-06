@@ -10,9 +10,7 @@
 		></script>
 
 		<!-- <script src="./node_modules/uuidjs/dist/uuid.core.js"></script> -->
-		<script>
-			// let uuid = crypto.randomUUID();
-		</script>
+
 		<link rel="stylesheet" href="./style.css" />
 
 		<title>ChainWriter</title>
@@ -40,8 +38,11 @@
 				let api = prompt("Enter Your MetaStreme API Key");
 				if (api === null) {
 					getApi();
-				} else localStorage.setItem("apiKey", api);
-				return api;
+				} else {
+					localStorage.setItem("apiKey", api);
+
+					return api;
+				}
 			};
 			let apiKey =
 				localStorage.apiKey && localStorage.apiKey != null
@@ -118,8 +119,15 @@
 				});
 				const txid = await txidRes;
 				const myTxid = await txid.json();
+				let myTxs = [];
+				if (localStorage.myTxs) {
+					myTxs.concat(localStorage.myTxs);
+				}
 
 				console.log(myTxid);
+
+				myTxs.push(myTxid.txid);
+				localStorage.setItem(myTxs, myTxs);
 				document.getElementById("getPost").innerHTML = `TXID: ${myTxid.txid}`;
 				setTimeout(() => {
 					getTx(myTxid.txid);
