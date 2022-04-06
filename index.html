@@ -39,7 +39,7 @@
 		<script>
 			const getApi = () => {
 				let api = prompt("Enter Your MetaStreme API Key");
-				if (api === null) {
+				if (api == "" || null) {
 					getApi();
 				} else {
 					localStorage.setItem("apiKey", api);
