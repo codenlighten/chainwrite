@@ -13,8 +13,9 @@ body {
 	height: 100vh;
 }
 #header {
+	background-color: #004aad;
 	height: auto;
-	width: 100%;
+	width: 90%;
 	margin: auto;
 	text-align: center;
 	color: black;
