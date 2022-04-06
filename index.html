@@ -122,12 +122,12 @@
 				let myTxs = [];
 				if (localStorage.myTxs) {
 					let txs = localStorage.myTxs;
-					myTxs.concat(txs);
 				}
 
 				console.log(myTxid);
 
 				myTxs.push(myTxid.txid);
+				myTxs.concat(txs);
 				localStorage.setItem("myTxs", myTxs);
 				document.getElementById("getPost").innerHTML = `TXID: ${myTxid.txid}`;
 				setTimeout(() => {
